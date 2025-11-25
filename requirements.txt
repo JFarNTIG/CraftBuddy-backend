@@ -1,4 +1,4 @@
 Flask==3.1.1
 gunicorn==23.0.0
 python-dotenv==1.0.1
-crafterlib @ git+https://github.com/JFarNTIG/crafterlib.git@v0.2.0-alpha
+crafterlib @ git+https://github.com/JFarNTIG/crafterlib.git@v0.2.1-alpha

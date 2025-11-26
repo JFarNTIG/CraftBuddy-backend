@@ -12,6 +12,7 @@ from flask import Flask
 from app.api.games import bp as games_bp
 from app.api.items import bp as items_bp
 from app.api.errors import bp as errors_bp
+from app.api.crafting_grids import bp as crafting_grids_bp
 
 
 def create_app() -> Flask:
@@ -41,3 +42,4 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(games_bp, url_prefix="/api")
     app.register_blueprint(items_bp, url_prefix="/api")
     app.register_blueprint(errors_bp, url_prefix="/api")
+    app.register_blueprint(crafting_grids_bp, url_prefix="/api")

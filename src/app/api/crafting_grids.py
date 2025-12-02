@@ -33,10 +33,10 @@ def recipes_for_item(game_id: int, item_id: int):
     for recipe in recipes:
         products.append(recipe["products"]) 
     
-    finalList = []
+    final_list = []
     for product in products:
         for crafting_grid in crafting_grids:
             if crafting_grid["products"] == product:
-                finalList.append(crafting_grid)
+                final_list.append(crafting_grid)
     
-    return jsonify(finalList)
+    return jsonify(final_list)

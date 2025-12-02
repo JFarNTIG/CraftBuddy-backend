@@ -34,3 +34,7 @@ class CraftingService:
             ingredients[ingredient] = amount * quantity / amount_of_product
         
         return {"ingredients": ingredients}
+    
+    @staticmethod
+    def get_crafting_grids_for_game(game_data: crafterlib.GameCraftingData) -> List[Dict]:
+        return [crafting_grid.to_dict() for crafting_grid in game_data.crafting_grids]

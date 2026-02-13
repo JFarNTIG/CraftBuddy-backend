@@ -39,3 +39,17 @@ def ingredients_for_item(game_id: int, item_id: int):
         return jsonify({"error": "Item not found"}), 404
     
     return jsonify(result)
+
+@bp.route('/games/<int:game_id>/stats', methods=['GET'])
+def minmax_ingredients(game_id: int):
+    game_data = GameService.load_game_data(game_id)
+    if not game_data:
+        return jsonify({"error": "Game not found or failed to load data"}), 404
+
+    graph = game_data.item_graph
+    result = {
+        "min": graph.min_ingredient_amount(),
+        "max": graph.max_ingredient_amount()
+    }
+
+    return jsonify(result)

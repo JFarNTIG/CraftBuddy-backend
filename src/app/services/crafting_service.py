@@ -42,11 +42,10 @@ class CraftingService:
     
     @staticmethod
     def calculate_amount_craftable(game_data: crafterlib.GameCraftingData, item_id: int, inventory: Dict[str, float], recursive: bool = False) -> Optional[Dict]:
-        # Get item from ID
+        # Get item from ID so we can use the item.name
         item = game_data.get_item_by_id(item_id)
         if not item:
             return None
 
         amount = crafterlib.craftutils.get_amount_craftable_with(game_data=game_data, ingredients=inventory, product=item.name, recursive=recursive)
-
         return { "item": item.name, "amount craftable": amount}

@@ -1,5 +1,6 @@
 from typing import List, Dict, Optional
 import crafterlib
+import crafterlib.craftutils
 
 class CraftingService:
     @staticmethod
@@ -38,3 +39,14 @@ class CraftingService:
     @staticmethod
     def get_crafting_grids_for_game(game_data: crafterlib.GameCraftingData) -> List[Dict]:
         return [crafting_grid.to_dict() for crafting_grid in game_data.crafting_grids]
+    
+    @staticmethod
+    def calculate_amount_craftable(game_data: crafterlib.GameCraftingData, item_id: int, inventory: Dict[str, float], recursive: bool = False) -> Optional[Dict]:
+        # Get item from ID
+        item = game_data.get_item_by_id(item_id)
+        if not item:
+            return None
+
+        amount = crafterlib.craftutils.get_amount_craftable_with(game_data=game_data, ingredients=inventory, product=item.name, recursive=recursive)
+
+        return { "item": item.name, "amount craftable": amount}

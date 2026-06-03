@@ -39,3 +39,37 @@ def ingredients_for_item(game_id: int, item_id: int):
         return jsonify({"error": "Item not found"}), 404
     
     return jsonify(result)
+
+@bp.route('/games/<int:game_id>/items/<int:item_id>/amountCraftable',methods=['GET'])
+def amount_craftable_for_item(game_id: int, item_id: int):
+    
+    game_data = GameService.load_game_data(game_id)
+    if not game_data:
+        return jsonify({"error": "Game not found or failed to load data"}), 404
+
+    # return inventory from query parameters
+    inventory = {}
+    for key, value in request.args.items():
+        if key == "recursive":
+            continue
+        try:
+            inventory[key] = float(value)
+        except ValueError:
+            return jsonify({"error": f"Invalid quantity for {key}"}), 400
+
+    if not inventory:
+        return jsonify({"error": "No inventory provided try amountCraftable?{itemname1}={quantity1}&{itemname2}={quantity2}&recursive={true/false}"}), 400
+
+    recursive = request.args.get("recursive", "false").lower() == "true"
+
+    result = CraftingService.calculate_amount_craftable(
+        game_data=game_data,
+        item_id=item_id,
+        inventory=inventory,
+        recursive=recursive
+    )
+
+    if result is None:
+        return jsonify({"error": "Item not found"}), 404
+
+    return jsonify(result)

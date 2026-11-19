@@ -1,4 +1,4 @@
-FROM python:3.12-slim-bullseye AS builder
+FROM python:3.12-slim-trixie AS builder
 
 RUN apt-get update \
     && apt-get upgrade -y \
@@ -17,7 +17,7 @@ RUN pip install --upgrade pip \
  && pip install --no-cache-dir --prefix=/install -r requirements.txt
 
 
-FROM python:3.12-slim-bullseye AS runtime
+FROM python:3.12-slim-trixie AS runtime
 WORKDIR /backend
 
 COPY --from=builder /install /usr/local
